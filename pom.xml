@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+
+    This program and the accompanying materials are made available under the
+    terms of the Eclipse Public License v. 2.0, which is available at
+    http://www.eclipse.org/legal/epl-2.0.
+
+    This Source Code may also be made available under the following Secondary
+    Licenses when the conditions for such availability set forth in the
+    Eclipse Public License v. 2.0 are satisfied: GNU General Public License,
+    version 2 with the GNU Classpath Exception, which is available at
+    https://www.gnu.org/software/classpath/license.html.
+
+    SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+      <groupId>org.eclipse.ee4j</groupId>
+      <artifactId>project</artifactId>
+      <version>1.0.5</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.glassfish.build</groupId>
+    <artifactId>spec-version-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>1.4-SNAPSHOT</version>
+    <name>Spec Version Maven Plugin</name>
+    <description>Spec Version Maven Plugin</description>
+
+    <developers>
+        <developer>
+            <id>shannon</id>
+            <name>Bill Shannon</name>
+            <organization>Oracle</organization>
+        </developer>
+        <developer>
+            <id>romain_grecourt</id>
+            <name>Romain Grecourt</name>
+            <organization>Oracle</organization>
+        </developer>
+    </developers>
+
+    <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
+    <mailingLists>
+        <mailingList>
+            <name>GlassFish Spec Version Maven Plugin mailing list</name>
+            <post>glassfish-spec-version-maven-plugin-dev@eclipse.org</post>
+            <subscribe>https://dev.eclipse.org/mailman/listinfo/glassfish-spec-version-maven-plugin-dev</subscribe>
+            <unsubscribe>https://dev.eclipse.org/mailman/listinfo/glassfish-spec-version-maven-plugin-dev</unsubscribe>
+            <archive>https://dev.eclipse.org/mhonarc/lists/glassfish-spec-version-maven-plugin-dev/</archive>
+        </mailingList>
+    </mailingLists>
+    <organization>
+        <name>Oracle Corporation</name>
+        <url>http://www.oracle.com</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>EPL 2.0</name>
+            <url>http://www.eclipse.org/legal/epl-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL2 w/ CPE</name>
+            <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>
+	  scm:git:https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin.git
+	</connection>
+        <developerConnection>
+	  scm:git:git@github.com:eclipse-ee4j/glassfish-spec-version-maven-plugin.git
+	</developerConnection>
+        <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
+      <tag>HEAD</tag>
+  </scm>
+
+    <build>
+	<defaultGoal>install</defaultGoal>
+        <filters>
+            <filter>src/test/resources/test-sets.properties</filter>
+        </filters>
+        <resources>
+             <resource>
+                 <directory>src/main/resources</directory>
+                 <includes>
+                     <include>checkVersion.sh</include>
+                 </includes>
+                 <filtering>true</filtering>
+                 <targetPath>${project.build.directory}</targetPath>
+             </resource>
+        </resources>
+        <testResources>
+            <testResource>
+		<directory>src/test/resources</directory>
+                <includes>
+                    <include>org/glassfish/spec/test/sets/**</include>
+                </includes>
+                <targetPath>${project.build.directory}/test-sets</targetPath>
+		<filtering>true</filtering>
+            </testResource>
+            <testResource>
+		<directory>src/it/</directory>
+                <targetPath>${project.build.directory}/it</targetPath>
+		<filtering>true</filtering>
+            </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/test-sets</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.0.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>2.8</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+		                    <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+    		            <execution>
+      		              <id>attach-sources</id>
+      		              <goals>
+        	                  <goal>jar</goal>
+      		              </goals>
+    		            </execution>
+  		          </executions>
+	          </plugin>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-javadoc-plugin</artifactId>
+               <version>2.8</version>
+               <configuration>
+                   <additionalparam>-Xdoclint:none</additionalparam>
+               </configuration>
+               <executions>
+                   <execution>
+                       <id>attach-javadocs</id>
+                       <goals>
+                           <goal>jar</goal>
+                       </goals>
+                   </execution>
+                   <execution>
+                       <phase>javadoc</phase>
+                       <goals>
+                           <goal>javadoc</goal>
+                       </goals>
+                   </execution>
+               </executions>
+           </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <arguments>${release.arguments}</arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-invoker-plugin</artifactId>
+                <version>1.8</version>
+                <configuration>
+                    <pomIncludes>
+                        <pomInclude>modules/*/pom.xml</pomInclude>
+                    </pomIncludes>
+                    <goals>
+                        <goal>clean</goal>
+                        <goal>package</goal>
+                    </goals>
+                    <projectsDirectory>${basedir}/target/it</projectsDirectory>
+                    <streamLogs>true</streamLogs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>build-it-modules</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <skipInvocation>${maven.test.skip}</skipInvocation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12</version>
+                <configuration>
+                    <forkMode>none</forkMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/unit/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>integration-test</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/integration/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+    </dependencies>
+</project>
