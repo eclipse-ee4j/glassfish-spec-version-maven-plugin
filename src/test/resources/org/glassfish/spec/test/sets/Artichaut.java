@@ -24,9 +24,9 @@ import org.glassfish.spec.test.TestSpec;
  * @author Romain Grecourt
  */
 public class Artichaut extends TestSpec {
+
     public Artichaut() {
-        super(
-                new Artifact(
+        super(new Artifact(
                 "${artichaut.groupId}",
                 "${artichaut.artifactId}",
                 "${artichaut.mavenVersion}"),
@@ -40,7 +40,7 @@ public class Artichaut extends TestSpec {
                 "${artichaut.apiPackage}",
                 "${artichaut.implNamespace}",
                 "${artichaut.jarType}",
-                Boolean.valueOf("${artichaut.nonFinal}").booleanValue());
+                Boolean.parseBoolean("${artichaut.nonFinal}"));
     }
 
     @Override
