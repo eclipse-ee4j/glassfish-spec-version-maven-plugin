@@ -24,9 +24,9 @@ import org.glassfish.spec.test.TestSpec;
  * @author Romain Grecourt
  */
 public class Moussaka extends TestSpec {
+
     public Moussaka() {
-        super(
-                new Artifact(
+        super(new Artifact(
                 "${moussaka.groupId}",
                 "${moussaka.artifactId}",
                 "${moussaka.mavenVersion}"),
@@ -40,7 +40,7 @@ public class Moussaka extends TestSpec {
                 "${moussaka.apiPackage}",
                 "${moussaka.implNamespace}",
                 "${moussaka.jarType}",
-                Boolean.valueOf("${moussaka.nonFinal}").booleanValue());
+                Boolean.parseBoolean("${moussaka.nonFinal}"));
     }
 
     @Override

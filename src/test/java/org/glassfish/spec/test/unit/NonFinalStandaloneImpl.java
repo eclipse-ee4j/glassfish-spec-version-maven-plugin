@@ -27,13 +27,14 @@ import org.junit.Test;
  * @author Romain Grecourt
  */
 public class NonFinalStandaloneImpl {
+
     private static TestSpec spec;
-    
+
     @BeforeClass
     public static void init(){
         spec = new Moussaka();
     }
-    
+
     @Test
     public void verifySpec() {
         spec.verify();
@@ -47,14 +48,14 @@ public class NonFinalStandaloneImpl {
                 msg.append(spec.getSpec().getErrors().get(i));
                 if(i < spec.getSpec().getErrors().size() -1){
                    msg.append(" -- ");
-                }                
+                }
             }
             Assert.fail(msg.toString());
         }
     }
-    
+
     @Test
     public void verifyMetadata(){
         spec.assertMetadata();
-    }  
+    }
 }
