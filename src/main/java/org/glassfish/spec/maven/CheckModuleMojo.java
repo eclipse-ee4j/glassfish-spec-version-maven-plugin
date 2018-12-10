@@ -61,7 +61,7 @@ public final class CheckModuleMojo extends AbstractMojo {
     /**
      * Mode. Allowed values are "javaee", "jakarta"
      */
-    @Parameter(property = "specMode", defaultValue = "javaee")
+    @Parameter(property = "specMode", defaultValue = "jakarta")
     private String specMode;
 
     /**
@@ -85,7 +85,7 @@ public final class CheckModuleMojo extends AbstractMojo {
                 spec = new Spec();
             }
 
-            spec.setGroupIdPrefix(specMode.equals("jakarta") ? Spec.JAKARTA_GROUP_ID : Spec.JAVAX_GROUP_ID);
+            spec.setSpecMode(specMode);
             spec.setArtifact(new Artifact(
                     project.getGroupId(),
                     project.getArtifactId(),

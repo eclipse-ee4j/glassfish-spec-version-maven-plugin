@@ -40,6 +40,7 @@ public class Moussaka extends TestSpec {
                 "${moussaka.apiPackage}",
                 "${moussaka.implNamespace}",
                 "${moussaka.jarType}",
+                "${moussaka.specMode}",
                 Boolean.parseBoolean("${moussaka.nonFinal}"));
     }
 

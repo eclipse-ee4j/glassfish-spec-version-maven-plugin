@@ -40,6 +40,7 @@ public class Artichaut extends TestSpec {
                 "${artichaut.apiPackage}",
                 "${artichaut.implNamespace}",
                 "${artichaut.jarType}",
+                "${artichaut.specMode}",
                 Boolean.parseBoolean("${artichaut.nonFinal}"));
     }
 

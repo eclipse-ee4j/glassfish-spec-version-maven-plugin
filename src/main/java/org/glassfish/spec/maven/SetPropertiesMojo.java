@@ -45,6 +45,12 @@ public final class SetPropertiesMojo extends AbstractMojo {
     private MavenProject project;
 
     /**
+     * Mode. Allowed values are "javaee", "jakarta"
+     */
+    @Parameter(property = "specMode", defaultValue = "jakarta")
+    private String specMode;
+
+    /**
      * The spec.
      */
     @Parameter(property = "spec", required = true)
@@ -52,11 +58,11 @@ public final class SetPropertiesMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        spec.setSpecMode(specMode);
         spec.setArtifact(new Artifact(
                 project.getGroupId(),
                 project.getArtifactId(),
                 project.getVersion()));
-
         Properties specProps = spec.getMetadata().getProperties();
 
         getLog().info("");

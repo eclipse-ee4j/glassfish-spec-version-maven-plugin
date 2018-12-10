@@ -37,6 +37,7 @@
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
+                    <specMode>${aubergine.specMode}</specMode>
                     <spec>
                         <nonFinal>${aubergine.nonFinal}</nonFinal>
                         <jarType>${aubergine.jarType}</jarType>

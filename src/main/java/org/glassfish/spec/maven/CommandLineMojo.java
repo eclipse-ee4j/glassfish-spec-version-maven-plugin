@@ -76,7 +76,7 @@ public final class CommandLineMojo extends AbstractMojo {
     /**
      * Mode. Allowed values are "javaee", "jakarta"
      */
-    @Parameter(property = "specMode", defaultValue = "javaee")
+    @Parameter(property = "specMode", defaultValue = "jakarta")
     private String specMode;
 
     /**
@@ -326,8 +326,8 @@ public final class CommandLineMojo extends AbstractMojo {
 
         // TODO remove mojo parameters and replace with spec.
         Spec spec = new Spec();
+        spec.setSpecMode(specMode);
         spec.setArtifact(artifact);
-        spec.setGroupIdPrefix(specMode.equals("jakarta") ? Spec.JAKARTA_GROUP_ID : Spec.JAVAX_GROUP_ID);
         spec.setSpecVersion(specVersion);
         spec.setNewSpecVersion(newSpecVersion);
         spec.setSpecImplVersion(specImplVersion);

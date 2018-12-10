@@ -19,37 +19,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>${artichaut.groupId}</groupId>
-    <artifactId>${artichaut.artifactId}</artifactId>
-    <version>${artichaut.mavenVersion}</version>
+    <groupId>${zucchini.groupId}</groupId>
+    <artifactId>${zucchini.artifactId}</artifactId>
+    <version>${zucchini.mavenVersion}</version>
 
-    <name>Artichaut API</name>
+    <name>Zucchini API</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <build>
-        <finalName>${artichaut.finalName}</finalName>
+        <finalName>${zucchini.finalName}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <specMode>${artichaut.specMode}</specMode>
+                    <specMode>jakarta</specMode>
                     <spec>
-                        <nonFinal>${artichaut.nonFinal}</nonFinal>
-                        <jarType>${artichaut.jarType}</jarType>
-                        <specVersion>${artichaut.specVersion}</specVersion>
-                        <newSpecVersion>${artichaut.newSpecVersion}</newSpecVersion>
-                        <specImplVersion>${artichaut.specImplVersion}</specImplVersion>
-                        <implVersion>${artichaut.implVersion}</implVersion>
-                        <newImplVersion>${artichaut.newImplVersion}</newImplVersion>
-                        <specBuild>${artichaut.specBuild}</specBuild>
-                        <implBuild>${artichaut.implBuild}</implBuild>
-                        <apiPackage>${artichaut.apiPackage}</apiPackage>
-                        <implNamespace>${artichaut.implNamespace}</implNamespace>
+                        <nonFinal>${zucchini.nonFinal}</nonFinal>
+                        <jarType>${zucchini.jarType}</jarType>
+                        <specVersion>${zucchini.specVersion}</specVersion>
+                        <newSpecVersion>${zucchini.newSpecVersion}</newSpecVersion>
+                        <specImplVersion>${zucchini.specImplVersion}</specImplVersion>
+                        <implVersion>${zucchini.implVersion}</implVersion>
+                        <newImplVersion>${zucchini.newImplVersion}</newImplVersion>
+                        <specBuild>${zucchini.specBuild}</specBuild>
+                        <implBuild>${zucchini.implBuild}</implBuild>
+                        <apiPackage>${zucchini.apiPackage}</apiPackage>
+                        <implNamespace>${zucchini.implNamespace}</implNamespace>
                     </spec>
                 </configuration>
                 <executions>

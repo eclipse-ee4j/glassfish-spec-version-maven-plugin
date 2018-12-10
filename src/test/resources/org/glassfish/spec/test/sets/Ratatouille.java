@@ -39,6 +39,7 @@ public class Ratatouille extends TestSpec {
                 "${ratatouille.apiPackage}",
                 "${ratatouille.implNamespace}",
                 "${ratatouille.jarType}",
+                "${ratatouille.specMode}",
                 Boolean.parseBoolean("${ratatouille.nonFinal}"));
     }
 

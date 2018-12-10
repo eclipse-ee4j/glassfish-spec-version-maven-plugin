@@ -23,59 +23,59 @@ import org.glassfish.spec.test.TestSpec;
  *
  * @author Romain Grecourt
  */
-public class Aubergine extends TestSpec {
+public class Zucchini extends TestSpec {
 
-    public Aubergine() {
+    public Zucchini() {
         super(new Artifact(
-                "${aubergine.groupId}",
-                "${aubergine.artifactId}",
-                "${aubergine.mavenVersion}"),
-                "${aubergine.specVersion}",
-                "${aubergine.newSpecVersion}",
-                "${aubergine.specImplVersion}",
-                "${aubergine.implVersion}",
-                "${aubergine.newImplVersion}",
-                "${aubergine.specBuild}",
-                "${aubergine.implBuild}",
-                "${aubergine.apiPackage}",
-                "${aubergine.implNamespace}",
-                "${aubergine.jarType}",
-                "${aubergine.specMode}",
-                Boolean.parseBoolean("${aubergine.nonFinal}"));
+                "${zucchini.groupId}",
+                "${zucchini.artifactId}",
+                "${zucchini.mavenVersion}"),
+                "${zucchini.specVersion}",
+                "${zucchini.newSpecVersion}",
+                "${zucchini.specImplVersion}",
+                "${zucchini.implVersion}",
+                "${zucchini.newImplVersion}",
+                "${zucchini.specBuild}",
+                "${zucchini.implBuild}",
+                "${zucchini.apiPackage}",
+                "${zucchini.implNamespace}",
+                "${zucchini.jarType}",
+                "${zucchini.specMode}",
+                Boolean.parseBoolean("${zucchini.nonFinal}"));
     }
 
     @Override
     public String getExpectedBundleVersion() {
-        return "${aubergine.bundleVersion}";
+        return "${zucchini.bundleVersion}";
     }
 
     @Override
     public String getExpectedBundleSpecVersion() {
-        return "${aubergine.bundleSpecVersion}";
+        return "${zucchini.bundleSpecVersion}";
     }
 
     @Override
     public String getExpectedBundleSymbolicName() {
-        return "${aubergine.bundleSymbolicName}";
+        return "${zucchini.bundleSymbolicName}";
     }
 
     @Override
     public String getExpectedJarExtensionName() {
-        return "${aubergine.jarExtensionName}";
+        return "${zucchini.jarExtensionName}";
     }
 
     @Override
     public String getExpectedJarImplementationVersion() {
-        return "${aubergine.jarImplementationVersion}";
+        return "${zucchini.jarImplementationVersion}";
     }
 
     @Override
     public String getExpectedJarSpecificationVersion() {
-        return "${aubergine.jarSpecificationVersion}";
+        return "${zucchini.jarSpecificationVersion}";
     }
 
     @Override
     public String getJarPath() {
-       return "target/it/modules/${aubergine.artifactId}/target/${aubergine.artifactId}.jar";
+       return "target/it/modules/${zucchini.artifactId}/target/${zucchini.artifactId}.jar";
     }
 }

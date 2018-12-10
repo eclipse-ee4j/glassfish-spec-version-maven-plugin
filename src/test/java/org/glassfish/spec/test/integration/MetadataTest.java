@@ -20,6 +20,7 @@ import org.glassfish.spec.test.sets.Courgette;
 import org.glassfish.spec.test.sets.Ratatouille;
 import org.glassfish.spec.test.sets.Aubergine;
 import org.glassfish.spec.test.sets.Moussaka;
+import org.glassfish.spec.test.sets.Zucchini;
 import org.junit.Test;
 
 /**
@@ -36,6 +37,11 @@ public class MetadataTest {
     @Test
     public void verifyCourgetteMetadata() {
         new Courgette().assertMetadataFromJar();
+    }
+
+    @Test
+    public void verifyZucchiniMetadata() {
+        new Zucchini().assertMetadataFromJar();
     }
 
     @Test
