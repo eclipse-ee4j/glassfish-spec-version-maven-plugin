@@ -328,7 +328,6 @@ public final class CommandLineMojo extends AbstractMojo {
         Spec spec = new Spec();
         spec.setSpecMode(specMode);
         spec.setArtifact(artifact);
-        spec.setGroupIdPrefix(specMode.equals("jakarta") ? Spec.JAKARTA_GROUP_ID : Spec.JAVAX_GROUP_ID);
         spec.setSpecVersion(specVersion);
         spec.setNewSpecVersion(newSpecVersion);
         spec.setSpecImplVersion(specImplVersion);

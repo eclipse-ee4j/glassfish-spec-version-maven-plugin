@@ -26,10 +26,10 @@ import java.util.Map;
 public enum SpecMode {
     /** Java EE spec mode for <code>javaee</code> value
      *  of <code>specMode</code> property (default). */
-    JAVAEE("JavaEE"),
+    JAVAEE("JavaEE", "javax."),
     /** Jakarta EE4J spec mode for <code>jakarta</code> value
      *  of <code>specMode</code> property. */
-    JAKARTA("Jakarta");
+    JAKARTA("Jakarta", "jakarta.");
 
     /** Spec mode enumeration elements count. */
     public static final int COUNT = SpecMode.values().length;
@@ -69,11 +69,28 @@ public enum SpecMode {
     private final String name;
 
     /**
+     * Group ID and package prefix for this mode.
+     * Including <code>'.'</code> at the end.
+     */
+    private final String prefix;
+
+    /**
      * Creates an instance of spec plugin mode.
      * @param modeName name of spec plugin mode
+     * @param groupIdPrefix group ID prefix for specific mode
      */
-    SpecMode(final String modeName) {
+    SpecMode(final String modeName, final String groupIdPrefix) {
         this.name = modeName;
+        this.prefix = groupIdPrefix;
+    }
+
+    /**
+     * Returns group ID and package prefix for this mode.
+     * Including  <code>'.'</code> at the end.
+     * @return group ID and package prefix for this mode
+     */
+    public String grePrefix() {
+        return prefix;
     }
 
 }

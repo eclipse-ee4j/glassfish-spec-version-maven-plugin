@@ -86,7 +86,6 @@ public final class CheckModuleMojo extends AbstractMojo {
             }
 
             spec.setSpecMode(specMode);
-            spec.setGroupIdPrefix(specMode.equals("jakarta") ? Spec.JAKARTA_GROUP_ID : Spec.JAVAX_GROUP_ID);
             spec.setArtifact(new Artifact(
                     project.getGroupId(),
                     project.getArtifactId(),

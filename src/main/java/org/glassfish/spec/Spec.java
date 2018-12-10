@@ -35,26 +35,6 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 public class Spec {
 
     /**
-     * GroupId used for JavaEE specs.
-     */
-    public static final String JAVAX_GROUP_ID = "javax.";
-
-    /**
-     * Package prefix used in JavaEE specs.
-     */
-    public static final String JAVAX_PACKAGE_PREFIX = "javax";
-
-    /**
-     * GroupId used for JakartaEE specs.
-     */
-    public static final String JAKARTA_GROUP_ID = "jakarta.";
-
-    /**
-     * Package prefix used in JakartaEE specs.
-     */
-    public static final String JAKARTA_PACKAGE_PREFIX = "jakarta";
-
-    /**
      * The Spec Artifact.
      */
     private Artifact artifact;
@@ -119,11 +99,6 @@ public class Spec {
      * The Spec Implementation Namespace.
      */
     private String implNamespace;
-
-    /**
-     * The Spec GroupId Prefix.
-     */
-    private String groupIdPrefix;
 
     /**
      * The Spec Final flag.
@@ -203,7 +178,7 @@ public class Spec {
     @SuppressWarnings("checkstyle:MagicNumber")
     private void checkClasses(final JarFile jarfile, final String... pkgs) {
         Enumeration<JarEntry> e = jarfile.entries();
-        Set<String> badPackages = new HashSet<String>();
+        Set<String> badPackages = new HashSet<>();
         entries:
         while (e.hasMoreElements()) {
             JarEntry je = e.nextElement();
@@ -236,7 +211,7 @@ public class Spec {
             // see if we've already complained about it
             if (!badPackages.contains(name)) {
                 badPackages.add(name);
-                if (name.startsWith(groupIdPrefix)) {
+                if (name.startsWith(specMode.grePrefix())) {
                     errors.add(String.format(
                         "ERROR: jar file includes class in wrong package (%s)",
                         name));
@@ -244,6 +219,45 @@ public class Spec {
             }
         }
     }
+
+    /**
+     * Verify that apiPackage starts with proper prefix.
+     * Verification depends on current spec mode:<ul>
+     * <li>javaee: strict check for required prefix</li>
+     * <li>jakarta: both currently supported prefixes are allowed</li></ul>
+     */
+    private void verifyApiPackagePrefix() {
+        switch (specMode) {
+            case JAVAEE:
+                if (!apiPackage.startsWith(specMode.grePrefix())) {
+                    errors.add(String.format(
+                            "WARNING: API packages (%s) must start with \"%s\"",
+                            apiPackage,
+                            specMode.grePrefix()));
+                }
+                break;
+            case JAKARTA:
+                boolean passed = false;
+                for (SpecMode sm : SpecMode.values()) {
+                    if (apiPackage.startsWith(sm.grePrefix())) {
+                        passed = true;
+                    }
+                }
+                if (!passed) {
+                    errors.add(String.format(
+                            "WARNING: API packages (%s) must start with "
+                                    + "\"%s\" or \"%s\"",
+                            apiPackage,
+                            SpecMode.JAVAEE.grePrefix(),
+                            SpecMode.JAKARTA.grePrefix()));
+                }
+                break;
+            // This statement is unreachable, but Java can't live without it.
+            default:
+                throw new IllegalStateException("Unknown specMode value.");
+        }
+    }
+
 
     /**
      * Perform the Spec verification.
@@ -375,11 +389,11 @@ public class Spec {
 
         if (jarType.equals(JarType.api)) {
             // verify that groupId starts with groupIdPrefix
-            if (!artifact.getGroupId().startsWith(groupIdPrefix)) {
+            if (!artifact.getGroupId().startsWith(specMode.grePrefix())) {
                 errors.add(String.format(
                         "WARNING: groupId (%s) must start with \"%s\"",
                         artifact.getGroupId(),
-                        groupIdPrefix));
+                        specMode.grePrefix()));
             }
 
             // verify that artifactId does end with -api
@@ -390,13 +404,7 @@ public class Spec {
                         API_SUFFIX));
             }
 
-            // verify that apiPackage starts with javax
-            if (!apiPackage.startsWith(JAVAX_GROUP_ID)) {
-                errors.add(String.format(
-                        "WARNING: API packages (%s) must start with \"%s\"",
-                        apiPackage,
-                        groupIdPrefix));
-            }
+            verifyApiPackagePrefix();
 
             // verify that Bundle-SymbolicName == apiPackage-api
             String symbolicName = buildBundleSymbolicName();
@@ -463,11 +471,11 @@ public class Spec {
             }
         } else {
             // verify that groupId starts with groupIdPrefix
-            if (artifact.getGroupId().startsWith(groupIdPrefix)) {
+            if (artifact.getGroupId().startsWith(specMode.grePrefix())) {
                 errors.add(String.format(
                         "WARNING: groupId (%s) should not start with \"%s\"",
                         artifact.getGroupId(),
-                        groupIdPrefix));
+                        specMode.grePrefix()));
             }
 
             // verify that artifactId does not end with -api
@@ -478,13 +486,7 @@ public class Spec {
                         API_SUFFIX));
             }
 
-            // verify that apiPackage starts with groupIdPrefix
-            if (!apiPackage.startsWith(groupIdPrefix)) {
-                errors.add(String.format(
-                        "WARNING: API packages (%s) must start with \"%s\"",
-                        apiPackage,
-                        groupIdPrefix));
-            }
+            verifyApiPackagePrefix();
 
             // verify that Bundle-SymbolicName == implNamespace.apiPackage
             String symbolicName = implNamespace + '.' + apiPackage;
@@ -650,16 +652,6 @@ public class Spec {
     }
 
     /**
-     * Set the groupId prefix for this spec.
-     * @param prefix the groupId prefix to use
-     */
-    public void setGroupIdPrefix(final String prefix) {
-        if (prefix != null && !prefix.isEmpty()) {
-            this.groupIdPrefix = prefix;
-        }
-    }
-
-    /**
      * Set the API package for this spec.
      * @param pkg the apiPackage to use
      */
@@ -681,10 +673,10 @@ public class Spec {
                 // more than required.
                 // Doing it manually to make sure this operation is exact.
                 if (apiPackage != null
-                        && apiPackage.startsWith(JAVAX_PACKAGE_PREFIX)) {
-                    return JAKARTA_PACKAGE_PREFIX
+                        && apiPackage.startsWith(SpecMode.JAVAEE.grePrefix())) {
+                    return SpecMode.JAKARTA.grePrefix()
                             + apiPackage.substring(
-                                    JAVAX_PACKAGE_PREFIX.length())
+                                    SpecMode.JAVAEE.grePrefix().length())
                             + Spec.API_SUFFIX;
                 }
                 return apiPackage + Spec.API_SUFFIX;
@@ -808,7 +800,7 @@ public class Spec {
         }
         sb.append("{");
         sb.append(" groupIdPrefix=");
-        sb.append(groupIdPrefix);
+        sb.append(specMode.grePrefix());
         if (specVersion != null && !specVersion.isEmpty()) {
             sb.append(" spec-version=");
             sb.append(specVersion);

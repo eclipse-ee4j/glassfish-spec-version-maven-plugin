@@ -45,7 +45,6 @@ public abstract class TestSpec extends Spec {
             String jarType,
             boolean nonFinal) {
         super();
-        setGroupIdPrefix("javax.");
         setArtifact(artifact);
         setSpecVersion(specVersion);
         setNewSpecVersion(newSpecVersion);
