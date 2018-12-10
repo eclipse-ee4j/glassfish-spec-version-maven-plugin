@@ -37,6 +37,7 @@
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
+                    <specMode>${moussaka.specMode}</specMode>
                     <spec>
                         <nonFinal>${moussaka.nonFinal}</nonFinal>
                         <jarType>${moussaka.jarType}</jarType>

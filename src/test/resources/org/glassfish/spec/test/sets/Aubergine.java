@@ -40,6 +40,7 @@ public class Aubergine extends TestSpec {
                 "${aubergine.apiPackage}",
                 "${aubergine.implNamespace}",
                 "${aubergine.jarType}",
+                "${aubergine.specMode}",
                 Boolean.parseBoolean("${aubergine.nonFinal}"));
     }
 

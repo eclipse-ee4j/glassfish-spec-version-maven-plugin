@@ -37,6 +37,7 @@
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
+                    <specMode>${ratatouille.specMode}</specMode>
                     <spec>
                         <nonFinal>${ratatouille.nonFinal}</nonFinal>
                         <jarType>${ratatouille.jarType}</jarType>

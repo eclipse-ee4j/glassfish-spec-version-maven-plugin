@@ -51,9 +51,9 @@ public class Spec {
 
     /**
      * The Spec mode (<code>"javaee"</code> or <code>"jakarta"</code>).
-     * Default value is {@link SpecMode.JAVAEE}.
+     * Default value is {@link SpecMode.JAKARTA}.
      */
-    private SpecMode specMode = SpecMode.JAVAEE;
+    private SpecMode specMode = SpecMode.JAKARTA;
 
     /**
      * The Spec Version.

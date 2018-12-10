@@ -40,6 +40,7 @@ public class Courgette extends TestSpec {
                 "${courgette.apiPackage}",
                 "${courgette.implNamespace}",
                 "${courgette.jarType}",
+                "${courgette.specMode}",
                 Boolean.parseBoolean("${courgette.nonFinal}"));
     }
 

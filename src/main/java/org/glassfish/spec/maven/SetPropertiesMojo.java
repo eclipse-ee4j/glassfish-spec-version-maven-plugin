@@ -47,7 +47,7 @@ public final class SetPropertiesMojo extends AbstractMojo {
     /**
      * Mode. Allowed values are "javaee", "jakarta"
      */
-    @Parameter(property = "specMode", defaultValue = "javaee")
+    @Parameter(property = "specMode", defaultValue = "jakarta")
     private String specMode;
 
     /**

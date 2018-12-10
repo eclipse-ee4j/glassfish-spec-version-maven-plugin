@@ -40,6 +40,7 @@ public class Zucchini extends TestSpec {
                 "${zucchini.apiPackage}",
                 "${zucchini.implNamespace}",
                 "${zucchini.jarType}",
+                "${zucchini.specMode}",
                 Boolean.parseBoolean("${zucchini.nonFinal}"));
     }
 

@@ -43,8 +43,10 @@ public abstract class TestSpec extends Spec {
             String apiPackage,
             String implNamespace,
             String jarType,
+            String specMode,
             boolean nonFinal) {
         super();
+        setSpecMode(specMode);
         setArtifact(artifact);
         setSpecVersion(specVersion);
         setNewSpecVersion(newSpecVersion);

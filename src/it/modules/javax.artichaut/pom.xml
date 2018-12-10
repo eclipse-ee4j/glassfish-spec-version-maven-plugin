@@ -37,6 +37,7 @@
                 <artifactId>spec-version-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
+                    <specMode>${artichaut.specMode}</specMode>
                     <spec>
                         <nonFinal>${artichaut.nonFinal}</nonFinal>
                         <jarType>${artichaut.jarType}</jarType>
