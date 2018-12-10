@@ -40,9 +40,19 @@ public class Spec {
     public static final String JAVAX_GROUP_ID = "javax.";
 
     /**
+     * Package prefix used in JavaEE specs.
+     */
+    public static final String JAVAX_PACKAGE_PREFIX = "javax";
+
+    /**
      * GroupId used for JakartaEE specs.
      */
     public static final String JAKARTA_GROUP_ID = "jakarta.";
+
+    /**
+     * Package prefix used in JakartaEE specs.
+     */
+    public static final String JAKARTA_PACKAGE_PREFIX = "jakarta";
 
     /**
      * The Spec Artifact.
@@ -58,6 +68,12 @@ public class Spec {
      * The Spec JAR file.
      */
     private JarFile jar;
+
+    /**
+     * The Spec mode (<code>"javaee"</code> or <code>"jakarta"</code>).
+     * Default value is {@link SpecMode.JAVAEE}.
+     */
+    private SpecMode specMode = SpecMode.JAVAEE;
 
     /**
      * The Spec Version.
@@ -383,7 +399,7 @@ public class Spec {
             }
 
             // verify that Bundle-SymbolicName == apiPackage-api
-            String symbolicName = apiPackage.concat(API_SUFFIX);
+            String symbolicName = buildBundleSymbolicName();
 
             if (!getMetadata().getBundleSymbolicName().isEmpty()
                     && !symbolicName.equals(getMetadata().getBundleSymbolicName())) {
@@ -550,7 +566,7 @@ public class Spec {
                 //  jar Implementation-Version: ${SPEC_IMPL_VERSION}
 
                 metadata = new Metadata(
-                        apiPackage + Spec.API_SUFFIX,
+                        buildBundleSymbolicName(),
                         specVersion,
                         specImplVersion,
                         apiPackage,
@@ -568,7 +584,7 @@ public class Spec {
                 String osgiVersion =
                         specVersion + NONFINAL_BUILD_SEPARATOR + specBuild;
                 metadata = new Metadata(
-                        apiPackage + Spec.API_SUFFIX,
+                        buildBundleSymbolicName(),
                         osgiVersion,
                         osgiVersion,
                         apiPackage,
@@ -625,6 +641,15 @@ public class Spec {
     }
 
     /**
+     * Set spec mode value for this spec.
+     * @param name spec mode value matching lower case value
+     *             of <code>SpecMode</code> name attribute
+     */
+    public void setSpecMode(final String name) {
+        this.specMode = SpecMode.getSpecMode(name);
+    }
+
+    /**
      * Set the groupId prefix for this spec.
      * @param prefix the groupId prefix to use
      */
@@ -641,6 +666,33 @@ public class Spec {
     public void setApiPackage(final String pkg) {
         if (pkg != null && !pkg.isEmpty()) {
             this.apiPackage = pkg;
+        }
+    }
+
+    /**
+     * Build bundle symbolic name from API package and API_SUFFIX.
+     * @return bundle symbolic name value to be supplied
+     *         as <code>spec.bundle.symbolic-name</code> property.
+     */
+    public String buildBundleSymbolicName() {
+        switch (specMode) {
+            case JAKARTA:
+                // String replacement methods are too common and may replace
+                // more than required.
+                // Doing it manually to make sure this operation is exact.
+                if (apiPackage != null
+                        && apiPackage.startsWith(JAVAX_PACKAGE_PREFIX)) {
+                    return JAKARTA_PACKAGE_PREFIX
+                            + apiPackage.substring(
+                                    JAVAX_PACKAGE_PREFIX.length())
+                            + Spec.API_SUFFIX;
+                }
+                return apiPackage + Spec.API_SUFFIX;
+            case JAVAEE:
+                return apiPackage + Spec.API_SUFFIX;
+            // This statement is unreachable, but Java can't live without it.
+            default:
+                throw new IllegalStateException("Unknown specMode value.");
         }
     }
 
