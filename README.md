@@ -33,7 +33,7 @@ Sets properties for manifest file OSGI headers.
 | `spec.specification.version`| Specification-Version |
 | `spec.implementation.version`| Implementation-Version |
 
-## check-module Goals
+## check-module Goal
 
 Validates maven properties consistency.
 
