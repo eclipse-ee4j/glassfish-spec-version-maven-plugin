@@ -31,7 +31,7 @@ Configuration properties always required:
 ### Properties Mapping for `api` jarType
 
 | Property | OSGI Header | Source |
-| --- | --- |
+| --- | --- | --- |
 | `spec.bundle.symbolic-name` | Bundle-SymbolicName | `spec.apiPackage` |
 | `spec.bundle.spec.version`| BundleSpecVersion | `spec.specVersion` |
 | `spec.bundle.version`| Bundle-Version | `spec.specImplVersion` |
@@ -42,7 +42,7 @@ Configuration properties always required:
 ### Properties Mapping for `impl` jarType
 
 | Property | OSGI Header | Source |
-| --- | --- |
+| --- | --- | --- |
 | `spec.bundle.symbolic-name` | Bundle-SymbolicName | `spec.implNamespace '.' spec.apiPackage` |
 | `spec.bundle.spec.version`| BundleSpecVersion | `spec.specVersion` |
 | `spec.bundle.version`| Bundle-Version | `spec.implVersion` |
