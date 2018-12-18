@@ -30,7 +30,7 @@ Sets properties for manifest file OSGI headers.
 | --- | --- | --- | --- |
 | specMode | `jakarta`&vert;`javax` | `jakarta` | `jakarta`: Jakarta EE projects mode<br/>`javaee`: legacy mode for java.net projects (deprecated) |
 | spec | object |  | API specification properties |
-| project | object |  | Maven project object model |
+| project | object | `${project}` | Maven project object model |
 
 Mandatory spec object properties:
 * `spec.specVersion`
@@ -70,7 +70,7 @@ Validates maven properties consistency.
 | module | file | *artifact* | API specification properties |
 | ignoreErrors | boolean | false | whether this goal should just print warnings or fail |
 | spec | object |  | API specification properties |
-| project | object |  | Maven project object model |
+| project | object | `${project}` | Maven project object model |
 
 *artifact*: `${project.build.directory}/${project.build.finalName}.${project.packaging}`
 
