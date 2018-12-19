@@ -20,12 +20,12 @@ Spec object is mandatory parameter of all plugin goals. But set of mandatory obj
 | newSpecVersion | version | | version number of the specification under development |
 | specImplVersion | version | | version number of the API classes, derived from specVersion by adding an optional micro version number |
 | implVersion | version | | version number of the implementation |
-| newImplVersion | version | | version number of the implementation that will be used when the implementation is final
- |
+| newImplVersion | version | | version number of the implementation that will be used when the implementation is final |
 | specBuild | version | | number of a particular build of the API jar file, e.g., "01", "02", etc |
 | implBuild | version | | number of a particular build of the implementation jar file, e.g., "01", "02", etc. |
 
-Properties must be encapsulated in `<spec>` section to be part of Spec object when defined in `pom.xml`. See examples.
+Version type is stored in String variables so leading zeroes won't be lost.
+Properties must be encapsulated in `<spec>` section to be part of Spec object when defined in `pom.xml`, see [examples](#specification-version-plugin-configuration).
 
 ## Goal: `set-spec-properties`
 
