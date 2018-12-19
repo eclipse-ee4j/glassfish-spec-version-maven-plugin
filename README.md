@@ -1,6 +1,6 @@
 # API Specification Version Maven Plugin
 
-The API Specification Version Plugin provides goals to set properties for manifest file OSGI headers and to verify consistence of specification, API and API implementation package names and versions.
+The API Specification Version Plugin provides goals to set properties for manifest file OSGI headers and to verify and enforce specification properties to be compliant with [JakartaEE Maven Versioning Rules](https://wiki.eclipse.org/JakartaEE_Maven_Versioning_Rules).
 
 **Goals:**
 * `set-spec-properties` (validate phase)
@@ -12,13 +12,20 @@ Spec object is mandatory parameter of all plugin goals. But set of mandatory obj
 
 | Property | Type | Default<br/>Value | Description |
 | --- | --- | --- | --- |
-| spec.nonFinal | boolean | false | `true` for snapshot build, `false` for release build
-| spec.jarType | `api`&vert;`impl`| `api` | `api`: specification with a separate API jar file <br/>`impl`: specification with a standalone API jar file |
-| spec.apiPackage | java package | | specification API package prefix |
-| spec.specVersion | version | | specification version |
-| spec.newSpecVersion | version | | specification version for snapshot builds (non final API) |
-| spec.specImplVersion | version | | specification implementation version |
-| spec.newImplVersion | version | | specification implementation version for snapshot builds (non final API) |
+| nonFinal | boolean | false | `true` for version numbers of non-final specifications</br>`false` for version numbers of final specifications
+| jarType | `api`&vert;`impl`| `api` | `api`: specification with a separate API jar file <br/>`impl`: specification with a standalone API jar file |
+| apiPackage | java package | | primary Java package defining the API, with `javax` replaced by `jakarta` |
+| implNamespace | java package | | primary Java package or namespace used by the implementation of the API, or with which the implementation of the API is associated |
+| specVersion | version | | version number of the last final specification, always of the form `<major>.<minor>` |
+| newSpecVersion | version | | version number of the specification under development |
+| specImplVersion | version | | version number of the API classes, derived from specVersion by adding an optional micro version number |
+| implVersion | version | | version number of the implementation |
+| newImplVersion | version | | version number of the implementation that will be used when the implementation is final
+ |
+| specBuild | version | | number of a particular build of the API jar file, e.g., "01", "02", etc |
+| implBuild | version | | number of a particular build of the implementation jar file, e.g., "01", "02", etc. |
+
+Properties must be encapsulated in `<spec>` section to be part of Spec object when defined in `pom.xml`. See examples.
 
 ## Goal: `set-spec-properties`
 
@@ -32,35 +39,31 @@ Sets properties for manifest file OSGI headers.
 | spec | object |  | API specification properties |
 | project | object | `${project}` | Maven project object model |
 
-Mandatory spec object properties:
-* `spec.specVersion`
-* `spec.apiPackage`
-
 ### Properties Mapping for `api` jarType
 
 | Property | OSGI Header | Source |
 | --- | --- | --- |
-| `spec.bundle.symbolic-name` | Bundle-SymbolicName | `spec.apiPackage` |
-| `spec.bundle.spec.version`| BundleSpecVersion | `spec.specVersion` |
-| `spec.bundle.version`| Bundle-Version | `spec.specImplVersion` |
-| `spec.extension.name`| Extension-Name | `spec.apiPackage` |
-| `spec.specification.version`| Specification-Version | `spec.specVersion` |
-| `spec.implementation.version`| Implementation-Version | `spec.specImplVersion` |
+| `spec.bundle.symbolic-name` | Bundle-SymbolicName | `apiPackage` |
+| `spec.bundle.spec.version`| BundleSpecVersion | `specVersion` |
+| `spec.bundle.version`| Bundle-Version | `specImplVersion` |
+| `spec.extension.name`| Extension-Name | `apiPackage` |
+| `spec.specification.version`| Specification-Version | `specVersion` |
+| `spec.implementation.version`| Implementation-Version | `specImplVersion` |
 
 ### Properties Mapping for `impl` jarType
 
 | Property | OSGI Header | Source |
 | --- | --- | --- |
-| `spec.bundle.symbolic-name` | Bundle-SymbolicName | `spec.implNamespace '.' spec.apiPackage` |
-| `spec.bundle.spec.version`| BundleSpecVersion | `spec.specVersion` |
-| `spec.bundle.version`| Bundle-Version | `spec.implVersion` |
-| `spec.extension.name`| Extension-Name | `spec.apiPackage` |
-| `spec.specification.version`| Specification-Version | `spec.specVersion` |
-| `spec.implementation.version`| Implementation-Version | `project.version` |
+| `spec.bundle.symbolic-name` | Bundle-SymbolicName | `implNamespace '.' apiPackage` |
+| `spec.bundle.spec.version`| BundleSpecVersion | `specVersion` |
+| `spec.bundle.version`| Bundle-Version | `implVersion` |
+| `spec.extension.name`| Extension-Name | `apiPackage` |
+| `spec.specification.version`| Specification-Version | `specVersion` |
+| `spec.implementation.version`| Implementation-Version | `${project.version}` |
 
 ## Goal: `check-module`
 
-Validates maven properties consistency.
+Validates specification properties consistency with [JakartaEE Maven Versioning Rules](https://wiki.eclipse.org/JakartaEE_Maven_Versioning_Rules).
 
 ### Properties
 
@@ -73,19 +76,6 @@ Validates maven properties consistency.
 | project | object | `${project}` | Maven project object model |
 
 *artifact*: `${project.build.directory}/${project.build.finalName}.${project.packaging}`
-
-Mandatory spec object properties:
-* `spec.specVersion`
-* `spec.apiPackage`
-* `spec.newSpecVersion` when `nonFinal == true`
-
-Mandatory spec object properties for `api` jarType:
-* `spec.specImplVersion` when `nonFinal == false`
-
-Mandatory spec object properties for `impl` jarType:
-* `spec.implNamespace`
-* `spec.implVersion`
-* `spec.newImplVersion` when `nonFinal == true`
 
 ## Example
 
