@@ -35,6 +35,16 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 public class Spec {
 
     /**
+     * GroupId used for JavaEE specs.
+     */
+    public static final String JAVAX_GROUP_ID = "javax.";
+
+    /**
+     * GroupId used for JakartaEE specs.
+     */
+    public static final String JAKARTA_GROUP_ID = "jakarta.";
+
+    /**
      * The Spec Artifact.
      */
     private Artifact artifact;
