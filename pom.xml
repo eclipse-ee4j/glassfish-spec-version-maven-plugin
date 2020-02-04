@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2013, 2019 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,20 +17,39 @@
 
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
-      <groupId>org.eclipse.ee4j</groupId>
-      <artifactId>project</artifactId>
-      <version>1.0.5</version>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.6</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.glassfish.build</groupId>
     <artifactId>spec-version-maven-plugin</artifactId>
-    <packaging>maven-plugin</packaging>
     <version>2.1-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
+
     <name>Spec Version Maven Plugin</name>
     <description>Spec Version Maven Plugin</description>
+    <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
+    <organization>
+        <name>Oracle Corporation</name>
+        <url>http://www.oracle.com</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>EPL 2.0</name>
+            <url>http://www.eclipse.org/legal/epl-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GPL2 w/ CPE</name>
+            <url>https://www.gnu.org/software/classpath/license.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -45,7 +64,6 @@
         </developer>
     </developers>
 
-    <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
     <mailingLists>
         <mailingList>
             <name>GlassFish Spec Version Maven Plugin mailing list</name>
@@ -55,44 +73,46 @@
             <archive>https://dev.eclipse.org/mhonarc/lists/glassfish-spec-version-maven-plugin-dev/</archive>
         </mailingList>
     </mailingLists>
-    <organization>
-        <name>Oracle Corporation</name>
-        <url>http://www.oracle.com</url>
-    </organization>
 
-    <licenses>
-        <license>
-            <name>EPL 2.0</name>
-            <url>http://www.eclipse.org/legal/epl-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-        <license>
-            <name>GPL2 w/ CPE</name>
-            <url>https://www.gnu.org/software/classpath/license.html</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
+    <scm>
+        <connection>
+            scm:git:https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin.git
+        </connection>
+        <developerConnection>
+            scm:git:git@github.com:eclipse-ee4j/glassfish-spec-version-maven-plugin.git
+        </developerConnection>
+        <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
+        <tag>HEAD</tag>
+    </scm>
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin/issues</url>
     </issueManagement>
 
-    <scm>
-        <connection>
-	  scm:git:https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin.git
-	</connection>
-        <developerConnection>
-	  scm:git:git@github.com:eclipse-ee4j/glassfish-spec-version-maven-plugin.git
-	</developerConnection>
-        <url>https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin</url>
-      <tag>HEAD</tag>
-    </scm>
-
     <properties>
-        <maven.version>3.3.9</maven.version>
+        <maven.version>3.6.3</maven.version>
         <release.arguments />
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>${maven.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <defaultGoal>install</defaultGoal>
@@ -129,22 +149,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.3.2</version>
+                    <version>3.8.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.7</version>
+                    <version>3.0.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.9.1</version>
+                    <version>3.0.1</version>
                     <configuration>
                         <additionalparam>-Xdoclint:none</additionalparam>
                     </configuration>
@@ -152,46 +172,46 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.5.2</version>
+                    <version>3.6.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.0.1</version>
+                    <version>3.0.0-M2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-invoker-plugin</artifactId>
-                    <version>1.8</version>
+                    <version>3.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.12</version>
+                    <version>3.0.0-M4</version>
                     <configuration>
-                        <forkMode>none</forkMode>
+                        <forkCount>1</forkCount>
                     </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>3.1.0</version>
                     <configuration>
-                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                        <sourceDirectories>${project.build.sourceDirectory}</sourceDirectories>
                         <configLocation>${basedir}/checkstyle.xml</configLocation>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.18</version>
+                            <version>8.29</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.glassfish.copyright</groupId>
                     <artifactId>glassfish-copyright-maven-plugin</artifactId>
-                    <version>2.0</version>
+                    <version>2.3</version>
                     <configuration>
                         <scm>git</scm>
                         <scmOnly>true</scmOnly>
@@ -205,7 +225,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <version>3.0.0-M1</version>
                     <configuration>
                         <mavenExecutorId>forked-path</mavenExecutorId>
                         <useReleaseProfile>false</useReleaseProfile>
@@ -218,19 +238,40 @@
                         <dependency>
                             <groupId>org.apache.maven.scm</groupId>
                             <artifactId>maven-scm-provider-gitexe</artifactId>
-                            <version>1.9.4</version>
+                            <version>1.11.2</version>
                         </dependency>
                     </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
+            <!-- Sets minimal Maven version to 3.5.4 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3.5.4</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Restricts the Java version to 1.8 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -276,7 +317,7 @@
                                 <goal>clean</goal>
                                 <goal>package</goal>
                             </goals>
-                            <projectsDirectory>${basedir}/target/it</projectsDirectory>
+                            <projectsDirectory>${basedir}/target/it/</projectsDirectory>
                             <streamLogs>true</streamLogs>
                             <skipInvocation>${maven.test.skip}</skipInvocation>
                         </configuration>
@@ -338,24 +379,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-            <version>${maven.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugin-tools</groupId>
-            <artifactId>maven-plugin-annotations</artifactId>
-            <version>3.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 </project>

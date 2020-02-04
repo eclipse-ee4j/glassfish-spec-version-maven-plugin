@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -50,18 +50,6 @@ public final class Artifact {
     private ArtifactVersion version;
 
     /**
-     * Artifact build number.
-     */
-    private String buildNumber;
-
-    /**
-     * Characters used to separate the build number within the version.
-     */
-    private static final String[] BUILD_NUMBER_SEPARATORS = new String[] {
-        "m", "b"
-    };
-
-    /**
      * The Maven SNAPSHOT qualifier.
      */
     public static final String SNAPSHOT_QUALIFIER = "SNAPSHOT";
@@ -82,24 +70,6 @@ public final class Artifact {
     }
 
     /**
-     * Parse a version qualifier and extract the build number.
-     * @param qualifier the qualifier to process
-     * @return the build number, or {@code null} if none found
-     */
-    private static String getBuildNumber(final String qualifier) {
-        String normalizedQualifier = stripSnapshotQualifier(qualifier);
-        if (normalizedQualifier != null) {
-            for (String c : BUILD_NUMBER_SEPARATORS) {
-                if (normalizedQualifier.contains(c)) {
-                    return normalizedQualifier.substring(
-                            normalizedQualifier.lastIndexOf(c) + 1);
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
      * Create a new {@link Artifact} instance.
      */
     public Artifact() {
@@ -115,7 +85,6 @@ public final class Artifact {
         this.groupId = gId;
         this.artifactId = aId;
         this.version = new DefaultArtifactVersion(v);
-        this.buildNumber = getBuildNumber(version.getQualifier());
     }
 
     /**
@@ -172,15 +141,6 @@ public final class Artifact {
      */
     public void setVersion(final String v) {
         this.version = new DefaultArtifactVersion(v);
-        this.buildNumber = getBuildNumber(this.version.getQualifier());
-    }
-
-    /**
-     * Get the build number of this artifact.
-     * @return the build number
-     */
-    public String getBuildNumber() {
-        return buildNumber;
     }
 
     /**
@@ -276,8 +236,6 @@ public final class Artifact {
                 ? this.artifactId.hashCode() : 0);
         hash = 71 * hash + (this.version != null
                 ? this.version.hashCode() : 0);
-        hash = 71 * hash + (this.buildNumber != null
-                ? this.buildNumber.hashCode() : 0);
         return hash;
     }
 }

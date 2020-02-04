@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -75,6 +75,6 @@ public class Ratatouille extends TestSpec {
 
     @Override
     public String getJarPath() {
-       return "target/it/modules/${ratatouille.artifactId}/target/${ratatouille.artifactId}.jar";
+       return "target/its/modules/${ratatouille.artifactId}/target/${ratatouille.artifactId}.jar";
     }
 }
