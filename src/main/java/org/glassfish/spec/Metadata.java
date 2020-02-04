@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013-2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -18,12 +18,8 @@ package org.glassfish.spec;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.jar.JarFile;
@@ -171,57 +167,6 @@ public final class Metadata {
             final String jen, final String jsv, final String jiv) {
 
         this(bsn, bsv, bv, jen, jsv, jiv, new LinkedList<String>());
-    }
-
-    /**
-     * Derive the Bundle Spec Version from OSGi headers.
-     * @param headers the headers to process
-     * @return the bundle spec version if found, otherwise an empty string.
-     */
-    @SuppressWarnings("checkstyle:LineLength")
-    private static String getBundleSpecVersion(final String headers) {
-
-        // TODO extract exported package version
-        // to use with the fromJar approach
-        Map<String, List<String>> res = new HashMap<String, List<String>>();
-
-        String[] headersTokens = headers.split(";");
-        if (headersTokens.length > 1) {
-            ArrayList<String> curHeader = new ArrayList<String>();
-            String key = "";
-            for (int i = 0; i < headersTokens.length; i++) {
-                if (!(headersTokens[i].startsWith("uses:=")
-                        || headersTokens[i].startsWith("version="))) {
-                    key = headersTokens[i];
-                } else {
-                    if (headersTokens[i].startsWith("version=")) {
-                        String[] lastToken = headersTokens[i].split(",");
-                        curHeader.add(lastToken[0]);
-                        res.put(key, new ArrayList<String>(curHeader));
-                        if (headersTokens[i].length() > lastToken[0].length()) {
-                            key = headersTokens[i].substring(lastToken[0].length() + 1);
-                            curHeader.clear();
-                        }
-                    } else if (headersTokens[i].startsWith("uses:=")) {
-                        if (i != headersTokens.length - 1
-                                && !headersTokens[i + 1].startsWith("version=")) {
-                            String[] lastToken = headersTokens[i].split(",");
-                            curHeader.add(headersTokens[i].substring(0,
-                                    headersTokens[i].length()
-                                            - (lastToken[lastToken.length - 1].length())));
-                            res.put(key, new ArrayList<String>(curHeader));
-                            key = lastToken[lastToken.length - 1];
-                            curHeader.clear();
-                        } else {
-                            curHeader.add(headersTokens[i]);
-                        }
-                    }
-                }
-            }
-        } else {
-            res.put(headers, Collections.EMPTY_LIST);
-        }
-        return "";
     }
 
     /**
