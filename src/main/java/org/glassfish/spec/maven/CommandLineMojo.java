@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -136,8 +136,8 @@ public final class CommandLineMojo extends AbstractMojo {
     /**
      * Show the usage.
      */
-    @Parameter(property = "help")
-    private Boolean help;
+    @Parameter(property = "help", defaultValue = "true")
+    private boolean help;
 
     /**
      * The system console.
@@ -186,6 +186,7 @@ public final class CommandLineMojo extends AbstractMojo {
     })
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (help) {
+            printParam("help", "\t\t\tprint usage (this message)");
             printParam("properties", "file\tread settings from property file");
             printParam("nonfinal", "\t\tnon-final specification");
             printParam("standalone", "\t\tAPI has a standalone implementation");
