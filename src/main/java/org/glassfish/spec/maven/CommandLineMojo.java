@@ -198,9 +198,9 @@ public final class CommandLineMojo extends AbstractMojo {
             printParam("specimplversion", "vers\tversion number of the API classes");
             printParam("implversion", "version\tversion number of the implementation");
             printParam("newspecversion", "vers\tversion number of the spec under development");
-            printParam("specbuild", "num\tbuild number of spec API jar file");
+            printParam("specbuild", "num\t\tbuild number of spec API jar file");
             printParam("newimplversion", "vers\tversion number of the implementation when final");
-            printParam("implbuild", "num\tbuild number of implementation jar file");
+            printParam("implbuild", "num\t\tbuild number of implementation jar file");
             printParam("specMode", "specMode\t'javaee' or 'jakarta'");
             return;
         }
