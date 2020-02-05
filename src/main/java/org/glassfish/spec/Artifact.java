@@ -53,21 +53,32 @@ public final class Artifact {
     /**
      * The Maven SNAPSHOT qualifier.
      */
-    public static final String SNAPSHOT_QUALIFIER = "SNAPSHOT";
+    private static final String SNAPSHOT_QUALIFIER = "-SNAPSHOT";
 
     /**
-     * Strip the SNAPSHOT qualifier from a given qualifier.
-     * @param qualifier the qualifier to process
-     * @return a non SNAPSHOT qualifier
+     * The Release Candidate qualifier.
      */
-    public static String stripSnapshotQualifier(final String qualifier) {
-        if (qualifier != null) {
-            if (qualifier.endsWith("-" + SNAPSHOT_QUALIFIER)) {
-                return qualifier.replace("-" + SNAPSHOT_QUALIFIER, "");
-            }
-            return qualifier;
+    private static final String RC_QUALIFIER = "-RC";
+
+    /**
+     * Strip the SNAPSHOT or RC qualifier from a given version.
+     * @param version the qualifier to process
+     * @return a non SNAPSHOT or RC version
+     */
+    public static String stripSnapshotOrRcQualifier(final String version) {
+        if (version == null) {
+            return null;
         }
-        return null;
+
+        if (version.endsWith(SNAPSHOT_QUALIFIER)) {
+            return version.replace(SNAPSHOT_QUALIFIER, "");
+        }
+
+        if (version.contains(RC_QUALIFIER)) {
+            return version.substring(0, version.indexOf(RC_QUALIFIER));
+        }
+
+        return version;
     }
 
     /**
@@ -117,7 +128,7 @@ public final class Artifact {
      * @return the version
      */
     public String getAbsoluteVersion() {
-        return stripSnapshotQualifier(version.toString());
+        return stripSnapshotOrRcQualifier(version.toString());
     }
 
     /**
