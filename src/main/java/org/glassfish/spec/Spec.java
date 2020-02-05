@@ -712,7 +712,7 @@ public class Spec {
      */
     public void setImplVersion(final String version) {
         this.implVersion = version != null
-                ? Artifact.stripSnapshotQualifier(version) : "";
+                ? Artifact.stripSnapshotOrRcQualifier(version) : "";
     }
 
     /**
@@ -747,7 +747,7 @@ public class Spec {
      */
     public void setSpecImplVersion(final String version) {
         this.specImplVersion = version != null
-                ? Artifact.stripSnapshotQualifier(version) : "";
+                ? Artifact.stripSnapshotOrRcQualifier(version) : "";
     }
 
     /**

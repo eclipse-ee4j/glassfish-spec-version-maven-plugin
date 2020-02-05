@@ -65,7 +65,7 @@ public final class Artifact {
      * @param version the qualifier to process
      * @return a non SNAPSHOT or RC version
      */
-    public static String stripSnapshotQualifier(final String version) {
+    public static String stripSnapshotOrRcQualifier(final String version) {
         if (version == null) {
             return null;
         }
@@ -128,7 +128,7 @@ public final class Artifact {
      * @return the version
      */
     public String getAbsoluteVersion() {
-        return stripSnapshotQualifier(version.toString());
+        return stripSnapshotOrRcQualifier(version.toString());
     }
 
     /**
