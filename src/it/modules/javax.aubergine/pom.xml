@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.glassfish.build.</groupId>
         <artifactId>spec-version-maven-plugin-it-parent</artifactId>
-        <version>2.1-SNAPSHOT</version>
+        <version>@project.version@</version>
     </parent>
 
     <groupId>${moussaka.groupId}</groupId>
