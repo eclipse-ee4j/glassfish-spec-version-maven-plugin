@@ -55,14 +55,6 @@
                         <implNamespace>${ratatouille.implNamespace}</implNamespace>
                     </spec>
                 </configuration>              
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>set-spec-properties</goal>
-                            <goal>check-module</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

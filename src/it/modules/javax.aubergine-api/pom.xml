@@ -38,7 +38,6 @@
             <plugin>
                 <groupId>org.glassfish.build</groupId>
                 <artifactId>spec-version-maven-plugin</artifactId>
-                <version>${project.version}</version>
                 <configuration>
                     <specMode>${aubergine.specMode}</specMode>
                     <spec>
@@ -55,14 +54,6 @@
                         <implNamespace>${aubergine.implNamespace}</implNamespace>
                     </spec>
                 </configuration>             
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>set-spec-properties</goal>
-                            <goal>check-module</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
