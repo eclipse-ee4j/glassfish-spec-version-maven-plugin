@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2019, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -35,8 +35,6 @@ apiVersion: v1
 kind: Pod
 metadata:
 spec:
-  securityContext:
-    runAsUser: 1000100000
   volumes:
     - name: maven-repo-shared-storage
       persistentVolumeClaim:
@@ -78,7 +76,7 @@ spec:
       steps {
         container('build-container') {
           timeout(time: 10, unit: 'MINUTES') {
-            sh 'mvn clean install -Pstaging'
+            sh 'mvn clean install -Pstaging --batch-mode -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
             junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
           }
         }
