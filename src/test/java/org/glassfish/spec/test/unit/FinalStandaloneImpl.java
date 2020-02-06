@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -17,44 +17,17 @@
 package org.glassfish.spec.test.unit;
 
 import org.glassfish.spec.test.TestSpec;
+import org.glassfish.spec.test.TestSpecBase;
 import org.glassfish.spec.test.sets.Ratatouille;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  * 
  * @author Romain Grecourt
  */
-public class FinalStandaloneImpl {
-    private static TestSpec spec;
+public class FinalStandaloneImpl extends TestSpecBase {
 
-    @BeforeClass
-    public static void init(){
-        spec = new Ratatouille();
-    }
-
-    @Test
-    public void verifySpec() {
-        spec.verify();
-        if(!spec.getSpec().getErrors().isEmpty()){
-            StringBuilder msg = new StringBuilder(spec.getSpec().toString());
-            msg.append(" should be compliant");
-            if (!spec.getSpec().getErrors().isEmpty()) {
-                msg.append(" -- ");
-            }
-            for(int i=0 ; i < spec.getSpec().getErrors().size() ; i++){
-                msg.append(spec.getSpec().getErrors().get(i));
-                if(i < spec.getSpec().getErrors().size() -1){
-                   msg.append(" -- ");
-                }                
-            }
-            Assert.fail(msg.toString());
-        }
-    }
-
-    @Test
-    public void verifyMetadata(){
-        spec.assertMetadata();
+    @Override
+    protected TestSpec createSpec() {
+        return new Ratatouille();
     }
 }
