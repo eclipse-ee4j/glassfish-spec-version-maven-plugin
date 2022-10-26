@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -223,13 +224,17 @@ public final class CommandLineMojo extends AbstractMojo {
                     specBuild = p.getProperty("SPEC_BUILD", specBuild);
                     newSpecVersion = p.getProperty("NEW_SPEC_VERSION", newSpecVersion);
                     apiJar = p.getProperty("API_JAR", apiJar);
-                    artifact = Artifact.fromJar(new JarFile(apiJar));
+                    try (JarFile jar = new JarFile(apiJar)) {
+                        artifact = Artifact.fromJar(jar);
+                    }
                 } else {
                     implVersion = p.getProperty("IMPL_VERSION", implVersion);
                     implBuild = p.getProperty("IMPL_BUILD", implBuild);
                     newImplVersion = p.getProperty("NEW_IMPL_VERSION", newImplVersion);
                     implJar = p.getProperty("IMPL_JAR", implJar);
-                    artifact = Artifact.fromJar(new JarFile(implJar));
+                    try (JarFile jar = new JarFile(implJar)) {
+                        artifact = Artifact.fromJar(jar);
+                    }
                 }
                 specVersion = p.getProperty("SPEC_VERSION", specVersion);
                 // really, any of the above 4

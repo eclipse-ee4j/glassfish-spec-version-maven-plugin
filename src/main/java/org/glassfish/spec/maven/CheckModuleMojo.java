@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -89,7 +90,9 @@ public final class CheckModuleMojo extends AbstractMojo {
                     project.getGroupId(),
                     project.getArtifactId(),
                     project.getVersion()));
-            spec.setMetadata(Metadata.fromJar(new JarFile(module)));
+            try (JarFile jar = new JarFile(module)) {
+                spec.setMetadata(Metadata.fromJar(jar));
+            }
             spec.verify();
 
             if (!spec.getErrors().isEmpty()) {

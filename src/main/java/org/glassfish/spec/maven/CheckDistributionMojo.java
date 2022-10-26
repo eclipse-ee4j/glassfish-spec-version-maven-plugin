@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -73,18 +74,19 @@ public final class CheckDistributionMojo extends AbstractMojo {
      * @throws IOException if an error occurs while reading the JAR file entries
      */
     private Spec getSpec(final File file) throws IOException {
-        JarFile jar = new JarFile(file);
-        Artifact a = Artifact.fromJar(jar);
-        for (Spec s : specs) {
-            if (s.getArtifact().equals(a)) {
-                s.setMetadata(Metadata.fromJar(jar));
-                return s;
+        try (JarFile jar = new JarFile(file)) {
+            Artifact a = Artifact.fromJar(jar);
+            for (Spec s : specs) {
+                if (s.getArtifact().equals(a)) {
+                    s.setMetadata(Metadata.fromJar(jar));
+                    return s;
+                }
             }
+            Spec spec = new Spec();
+            spec.setArtifact(a);
+            spec.setMetadata(Metadata.fromJar(jar));
+            return spec;
         }
-        Spec spec = new Spec();
-        spec.setArtifact(a);
-        spec.setMetadata(Metadata.fromJar(jar));
-        return spec;
     }
 
     @Override
