@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, 2023 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0, which is available at
@@ -56,6 +56,11 @@ public final class Artifact {
     private static final String SNAPSHOT_QUALIFIER = "-SNAPSHOT";
 
     /**
+     * The Milestone qualifier.
+     */
+    private static final String M_QUALIFIER = "-M";
+
+    /**
      * The Release Candidate qualifier.
      */
     private static final String RC_QUALIFIER = "-RC";
@@ -72,6 +77,10 @@ public final class Artifact {
 
         if (version.endsWith(SNAPSHOT_QUALIFIER)) {
             return version.replace(SNAPSHOT_QUALIFIER, "");
+        }
+
+        if (version.contains(M_QUALIFIER)) {
+            return version.substring(0, version.indexOf(M_QUALIFIER));
         }
 
         if (version.contains(RC_QUALIFIER)) {
