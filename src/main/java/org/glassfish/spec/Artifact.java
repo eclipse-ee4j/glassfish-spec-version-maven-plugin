@@ -66,11 +66,22 @@ public final class Artifact {
     private static final String RC_QUALIFIER = "-RC";
 
     /**
-     * Strip the SNAPSHOT or RC qualifier from a given version.
+     * Strip a small set of approved qualifiers from a given version.
+     *
+     * <p>
+     * The Jakarta EE process has defined a few qualifiers that are okay to
+     * use in versions. These will be removed from the version as they only
+     * serve as an intermediate release placeholder, not something to permanently
+     * depend upon.
+     *
+     * <p>
+     * At the moment these are {@code -SNAPSHOT}, {@code -Mx} and {@code -RCx}, where {@code x} is typically
+     * a number (e.g. -M1, -RC3, etc).
+     *
      * @param version the qualifier to process
-     * @return a non SNAPSHOT or RC version
+     * @return a version without any of the mentioned qualifiers
      */
-    public static String stripSnapshotOrRcQualifier(final String version) {
+    public static String stripApprovedQualifier(final String version) {
         if (version == null) {
             return null;
         }
@@ -137,7 +148,7 @@ public final class Artifact {
      * @return the version
      */
     public String getAbsoluteVersion() {
-        return stripSnapshotOrRcQualifier(version.toString());
+        return stripApprovedQualifier(version.toString());
     }
 
     /**
