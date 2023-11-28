@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 Eclipse Foundation and/or its affiliates. All rights reserved.
+ *  Copyright (c) 2020, 2023 Eclipse Foundation and/or its affiliates. All rights reserved.
  *
  *  This program and the accompanying materials are made available under the
  *  terms of the Eclipse Public License v. 2.0, which is available at
@@ -15,7 +15,7 @@
 */
 package org.glassfish.spec.test.unit;
 
-import static org.glassfish.spec.Artifact.stripSnapshotOrRcQualifier;
+import static org.glassfish.spec.Artifact.stripApprovedQualifier;
 
 import static java.util.Arrays.asList;
 
@@ -49,6 +49,6 @@ public class ArtifactTest {
 
     @Test
     public void testStrippingQualifier() {
-        assertEquals(stripped, stripSnapshotOrRcQualifier(fullVersion));
+        assertEquals(stripped, stripApprovedQualifier(fullVersion));
     }
 }
