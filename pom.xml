@@ -319,6 +319,7 @@
                             <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
                             <pomIncludes>
                                 <pomInclude>modules/*/pom.xml</pomInclude>
+                                <pomInclude>distributions/*/pom.xml</pomInclude>
                             </pomIncludes>
                             <goals>
                                 <goal>clean</goal>
