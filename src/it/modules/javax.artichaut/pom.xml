@@ -1,5 +1,6 @@
 <!--
 
+    Copyright (c) 2024 Eclipse Foundation and/or its affiliates. All rights reserved.
     Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
@@ -21,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.glassfish.build.</groupId>
+        <groupId>org.glassfish.build</groupId>
         <artifactId>spec-version-maven-plugin-it-parent</artifactId>
         <version>@project.version@</version>
     </parent>
