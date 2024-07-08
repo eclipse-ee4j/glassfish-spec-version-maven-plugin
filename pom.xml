@@ -313,7 +313,7 @@
                         <id>build-it-modules</id>
                         <goals>
                             <goal>install</goal>
-                            <goal>integration-test</goal>
+                            <goal>run</goal>
                         </goals>
                         <configuration>
                             <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
