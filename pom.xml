@@ -311,7 +311,6 @@
                 <executions>
                     <execution>
                         <id>build-it-modules</id>
-                        <phase>install</phase>
                         <goals>
                             <goal>install</goal>
                             <goal>integration-test</goal>
@@ -349,7 +348,7 @@
                     </execution>
                     <execution>
                         <id>integration-test</id>
-                        <phase>install</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>test</goal>
                         </goals>
