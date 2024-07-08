@@ -313,9 +313,11 @@
                         <id>build-it-modules</id>
                         <phase>install</phase>
                         <goals>
+                            <goal>install</goal>
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
+                            <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
                             <pomIncludes>
                                 <pomInclude>modules/*/pom.xml</pomInclude>
                             </pomIncludes>
