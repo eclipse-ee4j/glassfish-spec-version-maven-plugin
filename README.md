@@ -4,7 +4,9 @@ The API Specification Version Plugin provides goals to set properties for manife
 
 **Goals:**
 * `set-spec-properties` (validate phase)
-* `check-module` (package phase)
+* `check-module` (package phase) - enforce spec rules on a module and fail the build
+* `check-distribution` (package phase) - Check a set of spec artifacts in a directory.
+* `cli` (validate phase) - run spec verifications from the command line
 
 ## Spec object
 
@@ -35,9 +37,8 @@ Sets properties for manifest file OSGI headers.
 
 | Property | Type | Default<br/>Value | Description |
 | --- | --- | --- | --- |
-| specMode | `jakarta`&vert;`javax` | `jakarta` | `jakarta`: Jakarta EE projects mode<br/>`javaee`: legacy mode for java.net projects (deprecated) |
-| spec | object |  | API specification properties |
-| project | object | `${project}` | Maven project object model |
+| `spec` | object |  | Required. API specification properties |
+| `specMode` | `jakarta`&vert;`javax` | `jakarta` | `jakarta`: Jakarta EE projects mode<br/>`javaee`: legacy mode for java.net projects (deprecated) |
 
 ### Properties Mapping for `api` jarType
 
@@ -63,21 +64,39 @@ Sets properties for manifest file OSGI headers.
 
 ## Goal: `check-module`
 
-Validates specification properties consistency with [JakartaEE Maven Versioning Rules](https://wiki.eclipse.org/JakartaEE_Maven_Versioning_Rules).
+Validates specification properties consistency with [Jakarta EE Maven Versioning Rules](https://wiki.eclipse.org/JakartaEE_Maven_Versioning_Rules) for a single module.
 
 ### Properties
 
 | Property | Type | Default<br/>Value | Description |
 | --- | --- | --- | --- |
-| specMode | `jakarta`&vert;`javax` | `jakarta` | `jakarta`: Jakarta EE projects mode<br/>`javaee`: legacy mode for java.net projects (deprecated) |
-| module | file | *artifact* | API specification properties |
-| ignoreErrors | boolean | false | whether this goal should just print warnings or fail |
-| spec | object |  | API specification properties |
-| project | object | `${project}` | Maven project object model |
+| `spec` | object |  | Required. API specification properties |
+| `specMode` | `jakarta`&vert;`javax` | `jakarta` | `jakarta`: Jakarta EE projects mode<br/>`javaee`: legacy mode for java.net projects (deprecated) |
+| `module` | file | *artifact* | The module file to check |
+| `ignoreErrors` | `boolean` | `false` | whether this goal should just print warnings or fail |
 
-*artifact*: `${project.build.directory}/${project.build.finalName}.${project.packaging}`
+*artifact*: `${project.build.directory}/${project.build.finalName}.${project.packaging}` (this project's artifact file)
 
-## Example
+## Goal: `check-distribution`
+
+Validates specification properties consistency with [Jakarta EE Maven Versioning Rules](https://wiki.eclipse.org/JakartaEE_Maven_Versioning_Rules) for a set of modules in a directory.
+
+Only prints warnings, doesn't fail the build.
+
+### Properties
+
+| Property | Type | Default<br/>Value | Description |
+| --- | --- | --- | --- |
+| `dir` | directory |  | Required. The directory to search for module files to check |
+| `specs` | list of spec objects |  | Required. API specification properties |
+| `includes` | `String` | `javax*.jar` | The files in the `dir` directory to include, specified using inclusion Ant patterns |
+| `excludes` | `String` |  | The files in the `dir` directory to exclude, specified using inclusion Ant patterns |
+
+## Goal: `cli`
+
+Run spec verifications from the command line. See [CommandLineMojo.java](src/main/java/org/glassfish/spec/maven/CommandLineMojo.java) for info about supported properties.
+
+## Examples
 
 ### Specification Version Plugin Configuration
 
