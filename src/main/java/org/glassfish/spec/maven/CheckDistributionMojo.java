@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022, 2023 Contributors to the Eclipse Foundation. All rights reserved.
+ * Copyright (c) 2022, 2024 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -69,6 +69,12 @@ public final class CheckDistributionMojo extends AbstractMojo {
     private List<Spec> specs;
 
     /**
+     * Fail on distribution errors.
+     */
+    @Parameter(property = "failOnSpecCheckDistributionErrors", defaultValue = "false")
+    private boolean failOnSpecCheckDistributionErrors;
+
+    /**
      * Find or create the specification configuration for the given artifact.
      * @param file the artifact file to match
      * @return the spec configuration
@@ -107,12 +113,14 @@ public final class CheckDistributionMojo extends AbstractMojo {
             throw new MojoExecutionException(ex.getMessage(), ex);
         }
 
+        boolean anyJarWithErrors = false;
         for (File jar : jars) {
             try {
                 Spec spec = getSpec(jar);
                 spec.verify();
 
                 if (!spec.getErrors().isEmpty()) {
+                    anyJarWithErrors = true;
                     System.out.println("");
                     System.out.println(spec.getArtifact().toString());
                     String specDesc = spec.toString();
@@ -131,6 +139,9 @@ public final class CheckDistributionMojo extends AbstractMojo {
             } catch (IOException ex) {
                 getLog().warn(ex.getMessage(), ex);
             }
+        }
+        if (anyJarWithErrors && failOnSpecCheckDistributionErrors) {
+            throw new MojoFailureException("Found spec errors.");
         }
     }
 }
