@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Contributors to the Eclipse Foundation. All rights reserved.
+ * Copyright (c) 2022, 2025 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2019, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -30,7 +30,7 @@ pipeline {
   stages {
     stage('build') {
       tools {
-        jdk 'temurin-jdk11-latest'
+        jdk 'temurin-jdk21-latest'
         maven 'apache-maven-latest'
       }
       steps {
